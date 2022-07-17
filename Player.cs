@@ -32,14 +32,9 @@ public class Player : MonoBehaviour
 
     void Update () {
 
-    float walkUpDown = Input.GetAxis("Vertical") * walkSpeed;
-    // Debug.Log (Input.GetAxis ("Vertical")); Mayor que "0" si va hacia arriba (1) y menor que "0" si va hacia abajo (-1)
-    float walkLeftRight = Input.GetAxis("Horizontal") * walkSpeed;
-    // Debug.Log (Input.GetAxis ("Horizontal")); Mayor que "0" si va hacia la derecha (1) y menor que "0" si va hacia la izquierda (-1)
-    walkUpDown *= Time.deltaTime;
-    walkLeftRight *= Time.deltaTime;    
-    transform.Translate (0, walkUpDown, 0);
-    transform.Translate (walkLeftRight, 0, 0); 
+    WalkUpDown ();
+    WalkLeftRight ();
+
 
 
 
@@ -47,13 +42,23 @@ public class Player : MonoBehaviour
 
 
 
-    public void WalkHorizontal () {
+    public void WalkUpDown () {
 
-
+    float walkUpDown = Input.GetAxis("Vertical") * walkSpeed;
+    // Debug.Log (Input.GetAxis ("Vertical")); Mayor que "0" si va hacia arriba (1) y menor que "0" si va hacia abajo (-1)
+    walkUpDown *= Time.deltaTime;
+    transform.Translate (0, walkUpDown, 0);
         
     }
 
+    void WalkLeftRight () {
 
+    float walkLeftRight = Input.GetAxis("Horizontal") * walkSpeed;
+    // Debug.Log (Input.GetAxis ("Horizontal")); Mayor que "0" si va hacia la derecha (1) y menor que "0" si va hacia la izquierda (-1)
+    walkLeftRight *= Time.deltaTime;    
+    transform.Translate (walkLeftRight, 0, 0); 
+
+    }
 
 
 
