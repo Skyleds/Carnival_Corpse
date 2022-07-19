@@ -9,12 +9,16 @@ public class Player : MonoBehaviour
     public static Player sharedInstance;
 
     // Creamos las variables o estadisticas del personaje
-    public float walkSpeed = 5.0f;
+    public float walkSpeed = 1.0f;
 
     // Traemos variables del Rigidboddy2D
     private Rigidbody2D rigidBody;
 
+    // Traemos variables del Animator  
+    private Animator animator;
 
+    // Creamos las variables de movimiento
+    bool walkDown = false;
 
 
 
@@ -25,6 +29,9 @@ public class Player : MonoBehaviour
 
         // GetComponent<Rigidbody2D> (Carga los componentes de la clase en una variable)
         rigidBody = GetComponent<Rigidbody2D> ();
+
+        // GetComponent<Animator> (Carga los componentes de la clase en una variable)
+        animator = GetComponent<Animator> ();
 
      
         
@@ -48,7 +55,12 @@ public class Player : MonoBehaviour
     // Debug.Log (Input.GetAxis ("Vertical")); Mayor que "0" si va hacia arriba (1) y menor que "0" si va hacia abajo (-1)
     walkUpDown *= Time.deltaTime;
     transform.Translate (0, walkUpDown, 0);
-        
+    if (Input.GetAxis ("Vertical") < 0){
+        walkDown = true;
+    } else {
+        walkDown = false;
+    }
+    animator.SetBool ("WalkDown", walkDown);
     }
 
     void WalkLeftRight () {
