@@ -4,11 +4,14 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    
+
+    /*************************************************************************************************************************************/
+
     // Instanciamos la clase
     public static Player sharedInstance;
 
     // Creamos las variables o estadisticas del personaje
+    public int life;
     public float walkSpeed = 2.0f;
 
     // Traemos variables del Rigidboddy2D
@@ -16,9 +19,6 @@ public class Player : MonoBehaviour
 
     // Traemos variables del Animator  
     private Animator animator;
-
-
-
 
 
     void Start () {
@@ -32,32 +32,28 @@ public class Player : MonoBehaviour
         // GetComponent<Animator> (Carga los componentes de la clase en una variable)
         animator = GetComponent<Animator> ();
 
-     
-        
+        life = 100;
+ 
     }
+
+    /*************************************************************************************************************************************/
 
     void Update () {
 
     Walk ();
-
-
-
-
+    
 
     }
 
-
+    /*************************************************************************************************************************************/
 
     public void Walk () {
-
-
 
     if (Input.GetAxis("Fire3") != 0){
         walkSpeed = 4.0f;
     } else {
         walkSpeed = 2.0f;
     }
-
 
     // REALIZAMOS LOS MOVIMIENTOS DEL PERSONAJE
 
@@ -86,6 +82,15 @@ public class Player : MonoBehaviour
     
     }
 
+    /*************************************************************************************************************************************/
+
+    void Life (Collider2D theObject){
+
+        if (theObject.tag == "Enemies"){
+            life = life - 20;
+        }
+
+    }
 
 
 
