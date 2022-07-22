@@ -9,7 +9,7 @@ public class Player : MonoBehaviour
     public static Player sharedInstance;
 
     // Creamos las variables o estadisticas del personaje
-    public float walkSpeed = 1.0f;
+    public float walkSpeed = 2.0f;
 
     // Traemos variables del Rigidboddy2D
     private Rigidbody2D rigidBody;
@@ -17,8 +17,7 @@ public class Player : MonoBehaviour
     // Traemos variables del Animator  
     private Animator animator;
 
-    // Creamos las variables de movimiento
-    bool walkDown = false;
+
 
 
 
@@ -39,8 +38,8 @@ public class Player : MonoBehaviour
 
     void Update () {
 
-    WalkUpDown ();
-    WalkLeftRight ();
+    Walk ();
+
 
 
 
@@ -49,27 +48,42 @@ public class Player : MonoBehaviour
 
 
 
-    public void WalkUpDown () {
+    public void Walk () {
+
+
+
+    if (Input.GetAxis("Fire3") != 0){
+        walkSpeed = 4.0f;
+    } else {
+        walkSpeed = 2.0f;
+    }
+
+
+    // REALIZAMOS LOS MOVIMIENTOS DEL PERSONAJE
 
     float walkUpDown = Input.GetAxis("Vertical") * walkSpeed;
     // Debug.Log (Input.GetAxis ("Vertical")); Mayor que "0" si va hacia arriba (1) y menor que "0" si va hacia abajo (-1)
     walkUpDown *= Time.deltaTime;
     transform.Translate (0, walkUpDown, 0);
-    if (Input.GetAxis ("Vertical") < 0){
-        walkDown = true;
-    } else {
-        walkDown = false;
-    }
-    animator.SetBool ("WalkDown", walkDown);
-    }
-
-    void WalkLeftRight () {
 
     float walkLeftRight = Input.GetAxis("Horizontal") * walkSpeed;
     // Debug.Log (Input.GetAxis ("Horizontal")); Mayor que "0" si va hacia la derecha (1) y menor que "0" si va hacia la izquierda (-1)
     walkLeftRight *= Time.deltaTime;    
     transform.Translate (walkLeftRight, 0, 0); 
 
+    // REALIZAMOS LAS ANIMACIONES DE LOS MOVIMIENTOS
+
+    float horizontal = Input.GetAxis ("Horizontal");
+    float vertical = Input.GetAxis ("Vertical");
+
+    if (Input.GetAxis ("Horizontal") != 0 || Input.GetAxis ("Vertical") != 0){
+        animator.SetFloat ("Horizontal", horizontal);
+        animator.SetFloat ("Vertical", vertical);
+        animator.SetBool ("Walk", true);
+    } else {
+        animator.SetBool ("Walk", false);
+    }
+    
     }
 
 
