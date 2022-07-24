@@ -84,11 +84,9 @@ public class Player : MonoBehaviour
 
     /*************************************************************************************************************************************/
 
-    void Life (Collider2D theObject){
+    public void DamageTaken (int damage){
 
-        if (theObject.tag == "Enemies"){
-            life = life - 20;
-        }
+        life = life - damage;
 
     }
 
