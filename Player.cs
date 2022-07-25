@@ -13,12 +13,15 @@ public class Player : MonoBehaviour
     // Creamos las variables o estadisticas del personaje
     public int life;
     public float walkSpeed = 2.0f;
+    float view = 1.0f;
 
     // Traemos variables del Rigidboddy2D
     private Rigidbody2D rigidBody;
 
     // Traemos variables del Animator  
     private Animator animator;
+
+
 
 
     void Start () {
@@ -41,7 +44,8 @@ public class Player : MonoBehaviour
     void Update () {
 
     Walk ();
-    
+    View ();
+    BowAttack (view);
 
     }
 
@@ -69,6 +73,7 @@ public class Player : MonoBehaviour
 
     // REALIZAMOS LAS ANIMACIONES DE LOS MOVIMIENTOS
 
+
     float horizontal = Input.GetAxis ("Horizontal");
     float vertical = Input.GetAxis ("Vertical");
 
@@ -90,8 +95,34 @@ public class Player : MonoBehaviour
 
     }
 
+    void View (){
+
+        if (Input.GetAxis ("Horizontal") > 0){
+            view = 3.0f;
+        } else if (Input.GetAxis ("Horizontal") < 0){
+            view = 2.0f;
+        } else if (Input.GetAxis ("Vertical") > 0){
+            view = 4.0f;
+        } else if (Input.GetAxis ("Vertical") < 0){
+            view = 1.0f;
+        }
+
+    }
 
 
+    void BowAttack (float view){
+        
+        if (Input.GetAxisRaw ("Jump") != 0){
+        
+            animator.SetFloat ("View", view);
+            animator.SetBool ("BowAttack", true);
+
+        } else {
+
+            animator.SetBool ("BowAttack", false);
+
+        }
+    }
 
 
 
