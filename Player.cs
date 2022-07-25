@@ -21,6 +21,7 @@ public class Player : MonoBehaviour
     // Traemos variables del Animator  
     private Animator animator;
 
+    public GameObject arrowPrefab;
 
 
 
@@ -46,6 +47,7 @@ public class Player : MonoBehaviour
     Walk ();
     View ();
     BowAttack (view);
+
 
     }
 
@@ -74,6 +76,8 @@ public class Player : MonoBehaviour
     // REALIZAMOS LAS ANIMACIONES DE LOS MOVIMIENTOS
 
 
+
+
     float horizontal = Input.GetAxis ("Horizontal");
     float vertical = Input.GetAxis ("Vertical");
 
@@ -95,7 +99,7 @@ public class Player : MonoBehaviour
 
     }
 
-    void View (){
+    public void View (){
 
         if (Input.GetAxis ("Horizontal") > 0){
             view = 3.0f;
@@ -112,10 +116,11 @@ public class Player : MonoBehaviour
 
     void BowAttack (float view){
         
-        if (Input.GetAxisRaw ("Jump") != 0){
+        if (Input.GetButtonDown ("Jump")){
         
             animator.SetFloat ("View", view);
             animator.SetBool ("BowAttack", true);
+            StartCoroutine (Arrow(arrowPrefab));
 
         } else {
 
@@ -124,7 +129,11 @@ public class Player : MonoBehaviour
         }
     }
 
-
+    IEnumerator Arrow (GameObject arrowPrefab){
+        yield return new WaitForSeconds(0.85f);
+        GameObject arrow = Instantiate(arrowPrefab, transform.position, Quaternion.identity);
+        arrow.GetComponent<Rigidbody2D>().velocity = new Vector2 (5.0f, 0.0f);
+    }
 
 
 
